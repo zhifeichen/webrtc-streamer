@@ -2,9 +2,11 @@
 <head>
 <script src="libs/request.min.js" ></script>
 <script src="libs/ag-grid.min.js"></script>
+<script src="libs/adapter.js"></script>
 <script src="sendrequest.js" ></script>
 <script src="janusvideoroom.json" ></script>
 <script src="janusvideoroom.js" ></script>
+<script src="webrtcstreamer.json" ></script>
 <script src="webrtcstreamer.js" ></script>
 <style type="text/css">
 .cell {
@@ -31,7 +33,7 @@ footer {
 	
 	// columns
 	var columnDefs = [
-	    { headerName: "Video"  , field: "video" , cellClass: "cell" ,  width:72,  cellRenderer: function(params) { return "<video onclick='window.open(\"/webrtcstream.html?video=" + params.data.url + "\")' width=\"72\" height=\"60\" id=\"" + params.data.url + "\"/>"; } },
+	    { headerName: "Video"  , field: "video" , cellClass: "cell" ,  width:72,  cellRenderer: function(params) { return "<video onclick='window.open(\""+ webrtcConfig.url + "/webrtcstreamer.html?video=" + params.data.url + "\")' width=\"72\" height=\"60\" id=\"" + params.data.url + "\"/>"; } },
 	    { headerName: "Url"    , field: "url"   , cellClass: "cell" },
 	    { headerName: "Status" , field: "status", cellClass: "cell" , cellRenderer: function(params) { return '<b>' + params.value.toUpperCase() + '</b>'; } },
 	    { headerName: "RoomId" , field: "roomid", cellClass: "cell"  },
@@ -48,7 +50,7 @@ footer {
 				params.api.refreshCells([params.node], ['roomid']);
 				
 				if (!janus) {
-					janus = new JanusVideoRoom(document.querySelector('#janusUrl').value, null, request);
+					janus = new JanusVideoRoom(document.querySelector('#janusUrl').value, webrtcConfig.url, request);
 					janus.subscribeEvents(clientCallBack);
 				}
 				janus.join(parseInt(params.data.roomid), params.data.url, params.data.url);
@@ -108,8 +110,8 @@ footer {
 		// connect video
 		gridOptions.api.forEachNode( function(node) {
 			var data = node.data;
-			node.webrtc = new WebRtcStreamer(data.url, null, request)
-			node.webrtc.connect(data.url);
+			node.webrtc = new WebRtcStreamer(data.url, webrtcConfig.url, request)
+			node.webrtc.connect(data.url, webrtcConfig.options);
 		});
 	}
 	
@@ -123,13 +125,13 @@ footer {
 		
 	// load
 	window.onload         = function() { 
-		request( 'GET',  "/getVideoDeviceList" ).done(
+		request( 'GET',  webrtcConfig.url + "/api/getVideoDeviceList" ).done(
 			function (response) {
 				if (response.statusCode === 200) { onGetDeviceList(JSON.parse(response.body)) }
 			});
-		request( 'GET',  "/version" ).done(
+		request( 'GET',  webrtcConfig.url + "/api/version" ).done(
 			function (response) {
-				if (response.statusCode === 200) { onVersion(response.body) }
+				if (response.statusCode === 200) { onVersion(JSON.parse(response.body)) }
 			});
 	} 
 	

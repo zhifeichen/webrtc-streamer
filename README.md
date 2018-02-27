@@ -1,11 +1,14 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c209c81a15854964a08df5c300f56804)](https://www.codacy.com/app/michelpromonet_2643/webrtc-streamer?utm_source=github.com&utm_medium=referral&utm_content=mpromonet/webrtc-streamer&utm_campaign=badger)
 [![Build status](https://travis-ci.org/mpromonet/webrtc-streamer.png)](https://travis-ci.org/mpromonet/webrtc-streamer)
+[![CircleCI](https://circleci.com/gh/mpromonet/webrtc-streamer.svg?style=svg)](https://circleci.com/gh/mpromonet/webrtc-streamer)
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c209c81a15854964a08df5c300f56804)](https://www.codacy.com/app/michelpromonet_2643/webrtc-streamer?utm_source=github.com&utm_medium=referral&utm_content=mpromonet/webrtc-streamer&utm_campaign=badger)
 
 [![Release](https://img.shields.io/github/release/mpromonet/webrtc-streamer.svg)](https://github.com/mpromonet/webrtc-streamer/releases/latest)
 [![Download](https://img.shields.io/github/downloads/mpromonet/webrtc-streamer/total.svg)](https://github.com/mpromonet/webrtc-streamer/releases/latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/mpromonet/webrtc-streamer.svg)](https://hub.docker.com/r/mpromonet/webrtc-streamer/)
 
 [![Heroku](https://heroku-badge.herokuapp.com/?app=webrtc-streamer)](https://webrtc-streamer.herokuapp.com/)
+[![Heroku](https://heroku-badge.herokuapp.com/?app=rtsp2webrtc)](https://rtsp2webrtc.herokuapp.com/)
 
 WebRTC-streamer
 ===============
@@ -16,13 +19,13 @@ It embeds a HTTP server that implements API and serve a simple HTML page that us
 
 The WebRTC signaling is implemented throught HTTP requests:
 
- - /call   : send offer and get answer
- - /hangup : close a call
+ - /api/call   : send offer and get answer
+ - /api/hangup : close a call
 
- - /addIceCandidate : add a candidate
- - /getIceCandidate : get the list of candidates
+ - /api/addIceCandidate : add a candidate
+ - /api/getIceCandidate : get the list of candidates
 
-The list of HTTP API is available using /help.
+The list of HTTP API is available using /api/help.
 
 Nowdays there is 3 builds on [Travis CI](https://travis-ci.org/mpromonet/webrtc-streamer) :
  * for x86_64 on Ubuntu Xenial
@@ -91,9 +94,9 @@ Example
 
 [Live Demo](https://webrtc-streamer.herokuapp.com/)
 
-You can access to the WebRTC stream coming from an RTSP url using [webrtcstream.html](html/webrtcstream.html) page with the RTSP url as argument, something like:
+You can access to the WebRTC stream coming from an RTSP url using [webrtcstreamer.html](html/webrtcstreamer.html) page with the RTSP url as argument, something like:
 
-   https://webrtc-streamer.herokuapp.com/webrtcstream.html?rtsp://217.17.220.110/axis-media/media.amp
+   https://webrtc-streamer.herokuapp.com/webrtcstreamer.html?rtsp://217.17.220.110/axis-media/media.amp
 
 Embed in a HTML page:
 ===============
